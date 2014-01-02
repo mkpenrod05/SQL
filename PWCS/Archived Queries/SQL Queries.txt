@@ -1,0 +1,53 @@
+:::COPY ASSET INFO FROM 'assets' to 'archive-assets':::
+
+INSERT INTO dbo.[archive-assets]
+		(trunk_id, 
+		trunk_sn, 
+		account, 
+		aims_sn, 
+		partNum, 
+		modelNum, 
+		modelDesc, 
+		cost, 
+		[9600B], 
+		AES, 
+		OTAR, 
+		OTAP, 
+		assetComments)
+SELECT     	trunk_id, 
+		trunk_sn, 
+		account, 
+		aims_sn, 
+		partNum, 
+		modelNum, 
+		modelDesc, 
+		cost, 
+		[9600B], 
+		AES, 
+		OTAR, 
+		OTAP, 
+		assetComments
+FROM         	dbo.assets
+WHERE     	(aims_sn = '') OR (trunk_sn = '')
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::UPDATE the 'assets' table to set all fields to NULL except the trunk_id field:::
+
+UPDATE 	dbo.assets
+SET    	trunk_sn = NULL, 
+	account = NULL, 
+	aims_sn = NULL, 
+	partNum = NULL, 
+	modelNum = NULL, 
+	modelDesc = NULL, 
+	cost = NULL, 
+	[9600B] = NULL, 
+	AES = NULL, 
+	OTAR = NULL, 
+	OTAP = NULL, 
+	assetComments = NULL, 
+	assetDisabled = NULL, 
+	assetDisabledDate = NULL, 
+	assetDisabledComments = NULL
+WHERE  	(trunk_sn = '') OR (aims_sn = '') 
